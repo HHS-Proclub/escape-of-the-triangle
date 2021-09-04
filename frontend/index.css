@@ -1,0 +1,41 @@
+/*
+initialScreen is the only visible screen at the start
+*/
+
+#initialScreen {
+    display: block;
+}
+
+#nameScreen {
+    display: none;
+}
+
+#waitScreen {
+    display: none;
+}
+
+#gameScreen {
+    display: none;
+}
+
+#blockList {
+    /*
+    border: 2px solid black;
+    border-radius: 4px;
+    */
+}
+
+.scriptBlock {
+    transition: opacity 0.3s;
+}
+
+.scriptBlockCode {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    margin-right: 11px;
+    text-align: left;
+}
+
+.scriptBlockUses {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.35);
+}

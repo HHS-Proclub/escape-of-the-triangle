@@ -1,0 +1,25 @@
+5
+-1 -1
+Move forward 1 step
+
+moveForward(1);
+
+0 2
+Turn left
+
+turnLeft();
+
+1 2
+Turn left
+
+turnLeft();
+
+2 2
+Turn right
+
+turnRight();
+
+3 2
+Turn right
+
+turnRight();

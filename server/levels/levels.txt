@@ -1,0 +1,5 @@
+00-onward
+01-limited
+02-loop
+03-snake
+04-maze

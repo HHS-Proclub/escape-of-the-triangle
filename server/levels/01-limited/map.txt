@@ -1,0 +1,12 @@
+9
+XXXXXXXXX
+.XXXXXXX.
+..XXXXX..
+...XXX...
+.........
+...XXX...
+..XXXXX..
+.XXXXXXX.
+XXXXXXXXX
+4 8 2
+4 0

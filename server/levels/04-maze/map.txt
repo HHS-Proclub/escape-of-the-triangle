@@ -1,0 +1,12 @@
+9
+..XXXXXXX
+........X
+X.XXXXX.X
+X...X...X
+X.X...XXX
+X.X.X...X
+XXX.XXX.X
+X...X....
+XXX...X..
+0 0 0
+8 8
