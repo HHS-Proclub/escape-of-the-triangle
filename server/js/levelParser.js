@@ -77,6 +77,10 @@ function parseLevel(level, playerCount) {
         blocks.addBlock(uuidv4(), player, text, action, uses, true);
     }
 
+    // Add a reset block
+    let resetText = (level > 5 ? "resetLevel();" : "Reset level");
+    blocks.addBlock(uuidv4(), Math.floor(Math.random() * playerCount), resetText, "resetLevel();", 1, true);
+
     const state = {
         board,
         triangle,
@@ -85,6 +89,6 @@ function parseLevel(level, playerCount) {
     };
     console.log(state);
     
-    console.info(`${state.code}: Loaded level ${level}`);
+    console.info(`Loaded level ${levelNames[level]}`);
     return state;
 }

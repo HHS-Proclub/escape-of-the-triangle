@@ -1,0 +1,35 @@
+7
+-1 -1
+turnRight();
+
+turnRight();
+
+-1 -1
+moveForward(4);
+
+moveForward(4);
+
+-1 -1
+moveForward(3);
+
+moveForward(3);
+
+0 1
+moveForward(1);
+
+moveForward(1);
+
+1 1
+moveForward(1);
+
+moveForward(1);
+
+2 1
+moveForward(1);
+
+moveForward(1);
+
+3 1
+moveForward(1);
+
+moveForward(1);

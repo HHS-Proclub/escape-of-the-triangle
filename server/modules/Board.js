@@ -19,6 +19,10 @@ class Board {
 
         this.board[row][col] = value;
     }
+
+    getCell(row, col) {
+        return this.board[row][col];
+    }
 }
 
 module.exports = { Board };

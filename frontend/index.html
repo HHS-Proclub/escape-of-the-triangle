@@ -56,19 +56,33 @@
             <!-- Main game screen -->
             <div id="gameScreen" class="h-100">
                 <!-- Flex used to center the canvas -->
-                <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <!-- Main game canvas -->
-                    <canvas id="canvas" class=""></canvas>
-                    <div id="blockList" class="container d-flex flex-wrap align-items-center justify-content-center m-3">
-                        <!-- Blocks are added here by cloning the below template -->
-                    </div>
+                <div class="d-flex flex-row align-items-center justify-content-center h-100">
+                    <div id="leftGameScreen" class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <!-- Main game canvas -->
+                        <canvas id="canvas" class=""></canvas>
+                        <div id="blockList" class="container d-flex flex-wrap align-items-center justify-content-center m-3">
+                            <!-- Blocks are added here by cloning the below template -->
+                        </div>
 
-                    <template id="scriptBlockTemplate">
-                        <button class="scriptBlock btn d-flex align-items-center justify-content-center m-2">
-                            <div class="scriptBlockCode p-2">Move forward 1 step</div>
-                            <div class="scriptBlockUses p-2">2</div>
-                        </button>
-                    </template>
+                        <template id="scriptBlockTemplate">
+                            <button class="scriptBlock btn d-flex align-items-center justify-content-center m-2">
+                                <div class="scriptBlockCode p-2">Move forward 1 step</div>
+                                <div class="scriptBlockUses p-2">2</div>
+                            </button>
+                        </template>
+                    </div>
+                    <div id="rightGameScreen" class="d-flex flex-column">
+                        <h3>Level 0</h3>
+                        <p>"Where am I?" the triangle wondered. In a feat of dashing glory, the triangle transports to a new dimension... Help them get out of this mess!</p>
+                        <h4>Tips</h4>
+                        <p>A bunch of tips should go here. Right now, it's just a bunch of useless text that probably doesn't need to exist.</p>
+                        <h4>Queue</h4>
+                        <p>Move forward 1 step</p>
+                        <p>Turn left</p>
+                        <p>Turn left</p>
+                        <p>Move forward 1 step</p>
+                        <h5 style="position: absolute; bottom: 0;">Room Code: 000000</h5>
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,6 +18,13 @@ initialScreen is the only visible screen at the start
     display: none;
 }
 
+#rightGameScreen {
+    position: relative;
+    padding: 12px;
+    border: 2px solid black;
+    font-family: monospace;
+}
+
 #blockList {
     /*
     border: 2px solid black;

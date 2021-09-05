@@ -3,3 +3,5 @@
 02-loop
 03-snake
 04-maze
+05-multistep
+06-methodspiral

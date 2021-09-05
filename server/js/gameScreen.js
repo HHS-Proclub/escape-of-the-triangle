@@ -34,6 +34,7 @@ function handleLobbyStart(level, client) {
     // Setup game state
     state.level = Math.max(0, Number(level));
     state.lastTime = new Date().getTime();
+    state.status = "ok";
 
     // Setup the game
     loadLevel(state, state.level);
@@ -70,6 +71,25 @@ function broadcastInitLevel(state) {
     io.to(state.code).emit("initLevel", getEmitState(state));
 }
 
+function broadcastLevelComplete(state) {
+    io.to(state.code).emit("levelComplete");
+    setTimeout(() => {
+        state.level++;
+        // Setup the game
+        loadLevel(state, state.level);
+        broadcastInitLevel(state);
+    }, 2000);
+}
+
+function broadcastLevelFailed(state) {
+    io.to(state.code).emit("levelFailed");
+    setTimeout(() => {
+        // Setup the game
+        loadLevel(state, state.level);
+        broadcastInitLevel(state);
+    }, 2000);
+}
+
 function handleBlockUsed(id, client) {
     if (!(client.id in clientToRoom)) {
         client.emit("errorDisconnected");
@@ -91,4 +111,11 @@ function handleBlockUsed(id, client) {
 
     // Broadcast new state
     broadcastGameState(state);
+
+    // Check status
+    if (state.status === "pass") {
+        broadcastLevelComplete(state);
+    } else if (state.status === "fail") {
+        broadcastLevelFailed(state);
+    }
 }

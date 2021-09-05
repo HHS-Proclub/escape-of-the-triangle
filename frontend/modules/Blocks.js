@@ -55,11 +55,12 @@ export class Blocks {
         }
     }
 
-    initBlocks(socket) {
+    initBlocks(socket, player) {
         console.info("blocks", this.blocks);
         
         const blockList = document.getElementById("blockList");
         blockList.innerHTML = "";
+        this.player = player;
         this.renderBlocks(socket);
     }
 }

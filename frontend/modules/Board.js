@@ -27,6 +27,10 @@ export class Board {
         this.board[row][col] = value;
     }
 
+    getCell(row, col) {
+        return this.board[row][col];
+    }
+
     getCenter(row, col) {
         let size = this.getCellSize();
         let x1 = col*size;
@@ -66,7 +70,11 @@ export class Board {
                     case '.':
                         break;
                     case 'X':
-                        ctx.fillStyle = "#eac0c0";
+                        ctx.fillStyle = "#41424c";
+                        ctx.fillRect(j*size, i*size, size, size);
+                        break;
+                    case 'D':
+                        ctx.fillStyle = "#aa0000";
                         ctx.fillRect(j*size, i*size, size, size);
                         break;
                     default:

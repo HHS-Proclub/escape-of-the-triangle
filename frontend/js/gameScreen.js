@@ -3,13 +3,14 @@
  */
 
 import { screens, switchScreen, socket } from "./index.js";
+import { getAbsoluteHeight } from "./util.js";
 
 import { Board } from "../modules/Board.js";
 import { Triangle } from "../modules/Triangle.js";
 import { Goal } from "../modules/Goal.js";
 import { Blocks } from "../modules/Blocks.js";
 
-export { initGameScreen, initLevel, blocks };
+export { initGameScreen, initLevel, blocks, setPlayer };
 
 // Constants
 const CANVAS_SIZE = 600;
@@ -18,7 +19,7 @@ const FRAME_RATE = 60;
 // Variables
 let canvas, ctx;
 let board, triangle, goal, blocks;
-let lastTime;
+let lastTime, player;
 
 /**
  * Initalizes the gameScreen. Called once the page loads.
@@ -28,8 +29,10 @@ function initGameScreen() {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     canvas.width = canvas.height = CANVAS_SIZE;
-    // Set the blockList size
+    // Set the right div sizes
     document.getElementById("blockList").style.width = `${CANVAS_SIZE}px`;
+    document.getElementById("rightGameScreen").style.width = `${Math.floor(CANVAS_SIZE/2)}px`;
+    document.getElementById("rightGameScreen").style.height = `${CANVAS_SIZE}px`;
 
     // Create a default state
     board = new Board(3, canvas);
@@ -42,6 +45,7 @@ function initGameScreen() {
     blocks = new Blocks();
     blocks.addBlock(1, -1, "moveForward(1);", "moveForward(1);", -1, true);
     blocks.addBlock(2, -1, "turnLeft();", "turnLeft();", -1, true);
+    player = -1;
 
     setInterval(() => {
         const currTime = new Date().getTime();
@@ -52,6 +56,8 @@ function initGameScreen() {
 
     socket.on("initLevel", state => initLevel(state));
     socket.on("newGameState", state => handleNewGameState(state));
+    socket.on("levelComplete", state => handleLevelComplete(state));
+    socket.on("levelFailed", state => handleLevelFailed(state));
 }
 
 /**
@@ -66,7 +72,7 @@ function initLevel(state) {
     Object.assign(goal, state.goal);
     Object.assign(triangle, state.triangle);
     Object.assign(blocks, state.blocks);
-    blocks.initBlocks(socket);
+    blocks.initBlocks(socket, player);
 
     switchScreen(screens.gameScreen);
 }
@@ -91,6 +97,18 @@ function handleNewGameState(state) {
 }
 
 /**
+ * Plays a level complete animation.
+ * @param {*} state 
+ */
+function handleLevelComplete(state) {
+    console.info("Level complete!");
+}
+
+function handleLevelFailed(state) {
+    console.log("Level failed...");
+}
+
+/**
  * Main update loop. Called once every frame.
  * @param {*} dt 
  */
@@ -102,4 +120,12 @@ function update(dt) {
     goal.render(board);
     triangle.render(board);
     blocks.renderBlocks(socket);
+
+    // Dynamically resize info bar
+    const rightHeight = CANVAS_SIZE + getAbsoluteHeight(document.getElementById("blockList"));
+    document.getElementById("rightGameScreen").style.height = `${rightHeight}px`;
+}
+
+function setPlayer(p) {
+    player = p;
 }

@@ -3,7 +3,7 @@
  */
 
 import { Board } from "./Board.js";
-import { drawRegularPolygon } from "./util.js";
+import { drawRegularPolygon } from "../js/util.js";
 
 const TRIANGLE_SIZE = 0.45;
 const OFFSET_AMOUNT = 0.2;

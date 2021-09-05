@@ -20,11 +20,13 @@ DISABLE_TIME = 500;
 
 function loadLevel(state, level) {
     Object.assign(state, parseLevel(level, state.players.length));
+    state.status = "ok";
 }
 
 function useBlock(state, id, player) {
+    if (state.status !== "ok") return;
+
     const block = state.blocks.blocks.find(e => e.id === id);
-    console.log(block, player);
     if (typeof block === "undefined") return;
     else if (!block.canUse) return;
     else if (block.player !== -1 && block.player !== player) return;
@@ -34,7 +36,6 @@ function useBlock(state, id, player) {
     console.info(`Client used "${block.text}"`);
     activeState = state;
     eval(block.action);
-
     return block;
 }
 
@@ -50,20 +51,48 @@ function moveForward(steps) {
     const state = activeState;
     const ci = [0, 1, 0, -1];
     const cj = [1, 0, -1, 0];
-    for (let x = 0; x < steps; x++) {
-        state.triangle.i += ci[state.triangle.d];
-        state.triangle.j += cj[state.triangle.d];
+    for (let x = 0; x < steps && state.status === "ok"; x++) {
+        let ni = state.triangle.i + ci[state.triangle.d];
+        let nj = state.triangle.j + cj[state.triangle.d];
+        // In bounds?
+        if (ni < 0 || ni >= state.board.gridSize || nj < 0 || nj >= state.board.gridSize) return;
+        // Valid cell?
+        let c = state.board.getCell(ni, nj);
+        if (c === 'X') return;
+        else if (c === 'D') {
+            state.triangle.i = ni;
+            state.triangle.j = nj;
+            state.status = "fail";
+            return;
+        }
+
+        // Move the triangle
+        state.triangle.i = ni;
+        state.triangle.j = nj;
+
+        // Reached goal?
+        if (state.goal.i === ni && state.goal.j === nj) {
+            state.status = "pass";
+            return;
+        }
     }
 }
 
 function turnLeft() {
     const state = activeState;
+    if (state.status !== "ok") return;
     state.triangle.d--;
     if (state.triangle.d === -1) state.triangle.d = 3;
 }
 
 function turnRight() {
     const state = activeState;
+    if (state.status !== "ok") return;
     state.triangle.d++;
     if (state.triangle.d === 4) state.triangle.d = 0;
+}
+
+function resetLevel() {
+    const state = activeState;
+    state.status = "fail";
 }

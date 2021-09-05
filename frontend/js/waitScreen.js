@@ -3,7 +3,7 @@
  */
 
 import { screens, switchScreen, socket } from "./index.js";
-import { blocks, initLevel } from "./gameScreen.js";
+import { blocks, initLevel, setPlayer } from "./gameScreen.js";
 
 export { initWaitScreen };
 
@@ -40,9 +40,10 @@ function handleUpdateLobby(state) {
         playerList.innerHTML += `<p><b>${player.name}</b></p>`;
     }
     // Update player ID
-    blocks.player = state.players.findIndex(e => socket.id === e.id);
+    const player = state.players.findIndex(e => socket.id === e.id);
+    setPlayer(player);
     // Only the host can start the game
-    if (blocks.player === 0) {
+    if (player === 0) {
         document.getElementById("lobbyStartButton").textContent = "Start Game";
         document.getElementById("lobbyStartButton").disabled = false;
     } else {

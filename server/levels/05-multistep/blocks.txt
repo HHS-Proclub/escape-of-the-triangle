@@ -1,0 +1,35 @@
+7
+0 1
+Move forward 2 steps
+
+moveForward(2);
+
+0 1
+Turn left
+
+turnLeft();
+
+1 1
+Move forward 3 steps
+
+moveForward(3);
+
+1 2
+Turn left
+
+turnLeft();
+
+2 1
+Move forward 4 steps
+
+moveForward(4);
+
+2 1
+Turn right
+
+turnRight();
+
+3 -1
+Move forward 1,337 steps
+
+moveForward(1337);

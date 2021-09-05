@@ -79,6 +79,7 @@ function getEmitState(state) {
         code: state.code,
         players: state.players,
         level: state.level,
+        status: state.status,
         board: state.board,
         triangle: state.triangle,
         goal: state.goal,
