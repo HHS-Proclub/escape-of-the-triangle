@@ -1,0 +1,45 @@
+9
+0 -1
+moveForward(1);
+
+moveForward(1);
+
+1 -1
+moveForward(1);
+
+moveForward(1);
+
+2 -1
+moveForward(1);
+
+moveForward(1);
+
+3 -1
+moveForward(1);
+
+moveForward(1);
+
+0 -1
+turnLeft();
+
+turnLeft();
+
+0 -1
+turnRight();
+
+turnRight();
+
+1 -1
+toggleWall("green", 2.5);
+
+toggleWall(0, 2.5);
+
+2 -1
+toggleWall("blue", 2.5);
+
+toggleWall(1, 2.5);
+
+3 -1
+toggleWall("purple", 2.5);
+
+toggleWall(2, 2.5);

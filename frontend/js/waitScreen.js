@@ -32,17 +32,25 @@ function handleJoinLobby(state) {
 function handleUpdateLobby(state) {
     console.info("lobby", state);
     
-    document.getElementById("lobbyGameCode").textContent = `Game Code: ${state.code}`;
-    document.getElementById("lobbyPlayerCount").textContent = `Players: ${state.players.length}/4`;
-    const playerList = document.getElementById("lobbyPlayerList");
-    playerList.innerHTML = "";
+    document.getElementById("lobbyGameCode").innerHTML = `Game Code: ${state.code}`;
+    document.getElementById("lobbyPlayerCount").innerHTML = `Players: ${state.players.length}/4`;
+    const lobbyPlayerList = document.getElementById("lobbyPlayerList");
+    lobbyPlayerList.innerHTML = "";
     for (let player of state.players) {
-        playerList.innerHTML += `<p><b>${player.name}</b></p>`;
+        // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
+        var safeName = player.name.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+            return '&#' + i.charCodeAt(0) + ';';
+        });
+        if (socket.id !== player.id) {
+            lobbyPlayerList.innerHTML += `${safeName}<br>`;
+        } else {
+            lobbyPlayerList.innerHTML += `<u>${safeName}</u><br>`;
+        }
     }
     // Update player ID
     const player = state.players.findIndex(e => socket.id === e.id);
     setPlayer(player);
-    // Only the host can start the game
+    // Only the host (first player) can start the game
     if (player === 0) {
         document.getElementById("lobbyStartButton").textContent = "Start Game";
         document.getElementById("lobbyStartButton").disabled = false;

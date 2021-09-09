@@ -1,0 +1,21 @@
+4
+0 -1
+// Toggles green walls for 3 seconds
+toggleWall("green", 3);
+
+toggleWall(0, 3);
+
+1 -1
+moveForward(1);
+
+moveForward(1);
+
+2 -1
+turnLeft();
+
+turnLeft();
+
+3 -1
+turnRight();
+
+turnRight();

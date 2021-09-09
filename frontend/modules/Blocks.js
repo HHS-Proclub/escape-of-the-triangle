@@ -21,7 +21,6 @@ export class Blocks {
 
     /**
      * Renders the blocks, clearing unused ones.
-     * @param {*} socket 
      */
     renderBlocks(socket) {
         const blockList = document.getElementById("blockList");
@@ -55,12 +54,11 @@ export class Blocks {
         }
     }
 
-    initBlocks(socket, player) {
+    initBlocks(player) {
         console.info("blocks", this.blocks);
         
         const blockList = document.getElementById("blockList");
         blockList.innerHTML = "";
         this.player = player;
-        this.renderBlocks(socket);
     }
 }

@@ -3,6 +3,7 @@
  */
 
 const { roomStates, clientToRoom, getEmitState, io } = require("../server");
+const { broadcastGameState, broadcastLevelFailed } = require("./gameScreen");
 
 module.exports = {
     initNameScreen
@@ -17,6 +18,7 @@ function handlePlayerInfo(name, client) {
         client.emit("errorDisconnected");
         return;
     }
+    name = name.trim();
     if (name.length === 0) {
         client.emit("errorInvalidUsername", "Username cannot be empty!");
         return;
@@ -33,13 +35,20 @@ function handlePlayerInfo(name, client) {
     }
 
     // Update player info
-    state.players[client.player].name = name;
-    state.players[client.player].ready = true;
+    const playerIndex = state.clients.findIndex(e => e.id === client.id);
+    state.players[playerIndex].name = name;
+    state.players[playerIndex].ready = true;
 
     // Broadcast lobby info
     const emitState = getEmitState(state);
     client.emit("joinLobby", emitState);
     client.to(clientToRoom[client.id]).emit("updateLobby", emitState);
+    if ("level" in state) {
+        // Reset the level
+        state.status = "fail";
+        broadcastGameState(state);
+        broadcastLevelFailed(state);
+    }
 
     console.info(`Client ${client.id}'s username is ${name}`);
 }

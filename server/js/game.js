@@ -15,21 +15,24 @@ const { Board } = require("../modules/Board");
 const { Triangle } = require("../modules/Triangle");
 const { Goal } = require("../modules/Goal");
 const { Blocks } = require("../modules/Blocks");
+const { roomStates } = require("../server");
 
 DISABLE_TIME = 500;
 
 function loadLevel(state, level) {
     Object.assign(state, parseLevel(level, state.players.length));
+    for (let i = 0; i < state.players.length; i++) {
+        state.players[i].tempPlayerNum = i;
+    }
     state.status = "ok";
 }
 
-function useBlock(state, id, player) {
+function useBlock(state, id) {
     if (state.status !== "ok") return;
 
     const block = state.blocks.blocks.find(e => e.id === id);
     if (typeof block === "undefined") return;
     else if (!block.canUse) return;
-    else if (block.player !== -1 && block.player !== player) return;
     else if (block.uses > 0) block.uses--;
 
     // Use this block
@@ -49,6 +52,10 @@ let activeState;
 
 function moveForward(steps) {
     const state = activeState;
+    if (typeof steps === "string") {
+        if (!(steps in state.variables)) return;
+        else steps = state.variables[steps];
+    }
     const ci = [0, 1, 0, -1];
     const cj = [1, 0, -1, 0];
     for (let x = 0; x < steps && state.status === "ok"; x++) {
@@ -64,6 +71,9 @@ function moveForward(steps) {
             state.triangle.j = nj;
             state.status = "fail";
             return;
+        } else if (c >= '1' && c <= '4') {
+            let color = Number(c)-1;
+            if (state.toggles[color] === 0) return;
         }
 
         // Move the triangle
@@ -92,7 +102,34 @@ function turnRight() {
     if (state.triangle.d === 4) state.triangle.d = 0;
 }
 
+function toggleWall(color, duration) {
+    const state = activeState;
+    if (state.status !== "ok") return;
+    state.toggles[color] = duration;
+    setTimeout(() => activateWall(state, color), duration * 1000 + 150);
+}
+
+function setVariable(variable, value) {
+    const state = activeState;
+    if (state.status !== "ok") return;
+    state.variables[variable] = value;
+}
+
+function activateWall(state, color) {
+    if (!(state.code in roomStates)) return;
+    state.toggles[color] = 0;
+    const { broadcastGameState, broadcastLevelFailed } = require("./gameScreen");
+    broadcastGameState(state);
+
+    // Check if triangle is squashed
+    if (state.board.board[state.triangle.i][state.triangle.j] == color+1) {
+        state.status = "fail";
+        broadcastLevelFailed(state);
+    }
+}
+
 function resetLevel() {
     const state = activeState;
+    if (state.status !== "ok") return;
     state.status = "fail";
 }

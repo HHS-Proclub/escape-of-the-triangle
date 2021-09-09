@@ -5,7 +5,7 @@
 import { Board } from "./Board.js";
 import { drawRegularPolygon } from "../js/util.js";
 
-const TRIANGLE_SIZE = 0.45;
+const TRIANGLE_SIZE = 0.35;
 const OFFSET_AMOUNT = 0.2;
 
 export class Triangle {
@@ -35,7 +35,7 @@ export class Triangle {
     /**
      * Renders the triangle.
      */
-    render() {
+    render(frame) {
         this.drawI = this.i;
         this.drawJ = this.j;
         this.drawD = this.d;
@@ -48,7 +48,8 @@ export class Triangle {
         x -= Math.cos(d * Math.PI / 2) * offsetAmount;
         y -= Math.sin(d * Math.PI / 2) * offsetAmount;
         
-        this.ctx.fillStyle = "#00ff00";
-        drawRegularPolygon(3, triangleSize, x, y, d * Math.PI / 2, "both", this.ctx);
+        let greenColor = Math.round(225 + Math.sin(frame / 30) * 30);
+        this.ctx.fillStyle = `rgb(0, ${greenColor}, 0)`;
+        drawRegularPolygon(3, triangleSize, x, y, d * Math.PI / 2, "fill", this.ctx);
     }
 }

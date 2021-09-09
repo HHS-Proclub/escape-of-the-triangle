@@ -7,7 +7,9 @@ const { roomStates, clientToRoom, getEmitState, io } = require("../server");
 const { loadLevel, useBlock, update } = require("./game");
 
 module.exports = {
-    initGameScreen
+    initGameScreen,
+    broadcastGameState,
+    broadcastLevelFailed
 };
 
 // Constants
@@ -39,7 +41,7 @@ function handleLobbyStart(level, client) {
     // Setup the game
     loadLevel(state, state.level);
     broadcastInitLevel(state);
-    startGameLoop(state);
+    // startGameLoop(state);
 }
 
 function startGameLoop(state) {
@@ -78,7 +80,7 @@ function broadcastLevelComplete(state) {
         // Setup the game
         loadLevel(state, state.level);
         broadcastInitLevel(state);
-    }, 2000);
+    }, 1500);
 }
 
 function broadcastLevelFailed(state) {
@@ -87,7 +89,7 @@ function broadcastLevelFailed(state) {
         // Setup the game
         loadLevel(state, state.level);
         broadcastInitLevel(state);
-    }, 2000);
+    }, 1500);
 }
 
 function handleBlockUsed(id, client) {
@@ -98,7 +100,7 @@ function handleBlockUsed(id, client) {
 
     const state = roomStates[clientToRoom[client.id]];
     // Use the block
-    const block = useBlock(state, id, client.player);
+    const block = useBlock(state, id);
     if (typeof block === "undefined") return;
     // Disable block for a bit
     block.canUse = false;

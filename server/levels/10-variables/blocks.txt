@@ -1,0 +1,35 @@
+7
+0 -1
+moveForward(numberOfSteps);
+
+moveForward("numberOfSteps");
+
+0 -1
+turnLeft();
+
+turnLeft();
+
+0 -1
+turnRight();
+
+turnRight();
+
+0 -1
+toggleWall("green", 1);
+
+toggleWall(0, 1);
+
+1 -1
+numberOfSteps = 3;
+
+setVariable("numberOfSteps", 3);
+
+2 -1
+numberOfSteps = 4;
+
+setVariable("numberOfSteps", 4);
+
+3 -1
+numberOfSteps = 5;
+
+setVariable("numberOfSteps", 5);

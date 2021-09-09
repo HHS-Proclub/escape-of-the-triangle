@@ -1,23 +1,23 @@
 6
-0 1
+0 2
 Move forward 1 step
 
 moveForward(1);
-
-0 1
-Turn right
-
-turnRight();
 
 1 2
 Move forward 1 step
 
 moveForward(1);
 
-2 2
+2 1
 Move forward 1 step
 
 moveForward(1);
+
+2 1
+Turn right
+
+turnRight();
 
 3 1
 Move forward 1 step

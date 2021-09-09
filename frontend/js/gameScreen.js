@@ -19,7 +19,8 @@ const FRAME_RATE = 60;
 // Variables
 let canvas, ctx;
 let board, triangle, goal, blocks;
-let lastTime, player;
+let lastTime, player, frame;
+let toggles = [0, 0, 0, 0], toggleTimes = [0, 0, 0, 0];
 
 /**
  * Initalizes the gameScreen. Called once the page loads.
@@ -34,6 +35,12 @@ function initGameScreen() {
     document.getElementById("rightGameScreen").style.width = `${Math.floor(CANVAS_SIZE/2)}px`;
     document.getElementById("rightGameScreen").style.height = `${CANVAS_SIZE}px`;
 
+    const fullDiv = document.getElementById("fullScreenDiv");
+    setTimeout(() => {
+        fullDiv.style.transition = "opacity 2s";
+        fullDiv.style.opacity = "0";
+    }, 50);
+
     // Create a default state
     board = new Board(3, canvas);
     board.setCell(0, 0, 'X');
@@ -46,11 +53,13 @@ function initGameScreen() {
     blocks.addBlock(1, -1, "moveForward(1);", "moveForward(1);", -1, true);
     blocks.addBlock(2, -1, "turnLeft();", "turnLeft();", -1, true);
     player = -1;
+    frame = 0;
 
     setInterval(() => {
         const currTime = new Date().getTime();
         const dt = (currTime - lastTime) / 1000;
         lastTime = currTime;
+        frame++;
         update(dt);
     }, 1000 / FRAME_RATE);
 
@@ -66,15 +75,21 @@ function initGameScreen() {
  */
 function initLevel(state) {
     console.info("init", state);
-
-    // Update objects
-    Object.assign(board, state.board);
-    Object.assign(goal, state.goal);
-    Object.assign(triangle, state.triangle);
-    Object.assign(blocks, state.blocks);
-    blocks.initBlocks(socket, player);
-
-    switchScreen(screens.gameScreen);
+    
+    // Fade screen in and out
+    const fullDiv = document.getElementById("fullScreenDiv");
+    setTimeout(() => {
+        fullDiv.style.transition = "opacity 0.3s";
+        fullDiv.style.opacity = "1"
+    }, 50);
+    setTimeout(() => {
+        blocks.blocks = [];
+        handleNewGameState(state);
+        blocks.initBlocks(player);
+        // Update screen elements
+        switchScreen(screens.gameScreen);
+        setTimeout(() => fullDiv.style.opacity = "0", 300);
+    }, 500)
 }
 
 /**
@@ -88,12 +103,75 @@ function handleNewGameState(state) {
     Object.assign(board, state.board);
     Object.assign(goal, state.goal);
     Object.assign(triangle, state.triangle);
+    toggles = toggles.map((v, i) => {
+        if (typeof state.toggles === "undefined") return v;
+        else {
+            if (v === 0) toggleTimes[i] = state.toggles[i];
+            return state.toggles[i];
+        }
+    });
     for (let block of state.blocks.blocks) {
-        const currBlock = blocks.blocks.find(e => e.id === block.id);
+        let currBlock = blocks.blocks.find(e => e.id === block.id);
         if (typeof currBlock !== "undefined") {
             Object.assign(currBlock, block);
-        } else blocks.blocks.push(block);
+        } else {
+            currBlock = block;
+            blocks.blocks.push(block);
+        }
+        // Force disable block if wall color is currently toggled
+        if (currBlock.action.includes("toggleWall(")) {
+            const color = Number(currBlock.action["toggleWall(".length]);
+            if (toggles[color] !== 0) currBlock.canUse = false;
+        }
     }
+
+    // Update right side UI
+    document.getElementById("levelNumberText").innerHTML = `Level ${state.level}`;
+    if (state.titleText === "") document.getElementById("levelTitleText").style.display = "none";
+    else {
+        document.getElementById("levelTitleText").style.display = "block";
+        document.getElementById("levelTitleText").innerHTML = `<b>${state.titleText}</b>`;
+    }
+    if (state.flavorText === "") document.getElementById("flavorText").style.display = "none";
+    else {
+        document.getElementById("flavorText").style.display = "block";
+        document.getElementById("flavorText").innerHTML = state.flavorText;
+    }
+    
+    if (state.tipsText === "") {
+        document.getElementById("tipsTitle").style.display = "none";
+        document.getElementById("tipsText").style.display = "none";
+    } else {
+        document.getElementById("tipsTitle").style.display = "block";
+        document.getElementById("tipsText").style.display = "block";
+        document.getElementById("tipsText").innerHTML = state.tipsText;
+    }
+
+    // Blocks
+    let numPlayers = state.players.length;
+    const blockDivs = document.getElementById("blockDiv").children;
+    for (let div of blockDivs) div.innerHTML = "";
+    blockDivs[0].innerHTML = `<div><b>All</b></div>`;
+    for (let i = 0; i < numPlayers; i++) {
+        // https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript
+        var safeName = state.players[i].name.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+            return '&#' + i.charCodeAt(0) + ';';
+        });
+        blockDivs[i+1].innerHTML += `<div><b>${safeName}</b></div>`;
+    }
+    for (let block of blocks.blocks) {
+        const blockText = `
+        <div class="infoBlock d-flex align-items-center justify-content-between">
+            <div class="infoBlockText">${block.text}</div>
+            <div class="infoBlockUses">${block.uses === -1 ? '∞' : block.uses}</div>
+        </div>
+        `;
+        blockDivs[block.player+1].innerHTML += blockText;
+    }
+
+    // Bottom info
+    document.getElementById("gameCodeText").innerHTML = `<b>Game Code: ${state.code}</b>`;
+    document.getElementById("gamePlayerCount").innerHTML = `<b>Players: ${state.players.length}/4</b>`;
 }
 
 /**
@@ -102,10 +180,24 @@ function handleNewGameState(state) {
  */
 function handleLevelComplete(state) {
     console.info("Level complete!");
+    
+    document.body.style.transition = "";
+    document.body.style.backgroundColor = "#003000";
+    setTimeout(() => {
+        document.body.style.transition = "background-color 2s";
+        document.body.style.backgroundColor = "#000000";
+    }, 50);
 }
 
 function handleLevelFailed(state) {
     console.log("Level failed...");
+
+    document.body.style.transition = "";
+    document.body.style.backgroundColor = "#300000";
+    setTimeout(() => {
+        document.body.style.transition = "background-color 2s";
+        document.body.style.backgroundColor = "#000000";
+    }, 50);
 }
 
 /**
@@ -113,12 +205,14 @@ function handleLevelFailed(state) {
  * @param {*} dt 
  */
 function update(dt) {
+    toggleTimes = toggleTimes.map(e => e-dt);
+
     // Render objects
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    board.render();
-    goal.render(board);
-    triangle.render(board);
+    board.render(frame, toggles, toggleTimes);
+    goal.render(frame);
+    triangle.render(frame);
     blocks.renderBlocks(socket);
 
     // Dynamically resize info bar

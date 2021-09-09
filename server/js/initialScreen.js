@@ -31,8 +31,7 @@ function handleNewRoom(client) {
     // Update client to code mapping and generate default room state
     clientToRoom[client.id] = code;
     const state = { code, clients: [client], players: [] };
-    client.player = 0;
-    state.players[client.player] = {
+    state.players[0] = {
         name: "Anonymous",
         ready: false
     };
@@ -60,8 +59,7 @@ function handleJoinRoom(code, client) {
     // Update client to code mapping and generate default room state
     clientToRoom[client.id] = code;
     state.clients.push(client);
-    client.player = state.players.length;
-    state.players[client.player] = {
+    state.players[state.players.length] = {
         name: "Anonymous",
         ready: false
     };

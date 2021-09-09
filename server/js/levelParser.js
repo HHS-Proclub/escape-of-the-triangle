@@ -21,6 +21,25 @@ function readFromFile(filepath) {
     return input;
 }
 
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffleArray(array) {
+    var currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+
 function parseLevel(level, playerCount) {
     let levelNames = readFromFile(path.join(__dirname, "..", "levels", "levels.txt"));
     console.info(`${levelNames.length} levels loaded`);
@@ -54,11 +73,19 @@ function parseLevel(level, playerCount) {
     let numBlocks = Number(input[0]);
     let blocks = new Blocks();
     let currLine = 1;
+    // Each player gets a random set of blocks
+    let randPlayerMap = [];
+    let playerNumBlocks = [];
+    for (let i = 0; i < playerCount; i++) {
+        randPlayerMap.push(i);
+        playerNumBlocks.push(0);
+    }
+    randPlayerMap = shuffleArray(randPlayerMap);
     for (let i = 0; i < numBlocks; i++) {
         // Parse block details
         let [ player, uses ] = input[currLine++].split(' ').map(e => Number(e));
         let text = input[currLine++];
-        while (input[currLine]) text += '\n' + input[currLine++];
+        while (input[currLine]) text += '<br>' + input[currLine++];
         currLine++;
         let action = input[currLine++];
         while (input[currLine]) action += ' ' + input[currLine++];
@@ -74,18 +101,48 @@ function parseLevel(level, playerCount) {
         }
 
         // Add the block
-        blocks.addBlock(uuidv4(), player, text, action, uses, true);
+        blocks.addBlock(uuidv4(), (player === -1 ? -1 : randPlayerMap[player]), text, action, uses, true);
+        if (player !== -1) playerNumBlocks[randPlayerMap[player]]++;
     }
 
-    // Add a reset block
+    // Add a reset block to the person with the least blocks
     let resetText = (level > 5 ? "resetLevel();" : "Reset level");
-    blocks.addBlock(uuidv4(), Math.floor(Math.random() * playerCount), resetText, "resetLevel();", 1, true);
+    let minBlocks = Math.min(...playerNumBlocks);
+    let minChoices = [];
+    for (let i = 0; i < playerCount; i++) {
+        if (playerNumBlocks[i] === minBlocks) minChoices.push(i);
+    }
+    blocks.addBlock(uuidv4(), minChoices[Math.floor(Math.random()*minChoices.length)], resetText, "resetLevel();", 1, true);
+
+    // Parse title, flavor text, and tips
+    const aboutPath = path.join(__dirname, "..", "levels", levelNames[level], "about.txt");
+    let titleText = "";
+    let flavorText = "";
+    let tipsText = "";
+    if (fs.existsSync(aboutPath)) {
+        input = readFromFile(aboutPath);
+        titleText = input[0];
+        currLine = 2;
+        flavorText = input[currLine++];
+        while (input[currLine] !== "===") flavorText += '<br>' + input[currLine++];
+        currLine++;
+        tipsText = input[currLine++];
+        while (input[currLine] !== "===") tipsText += '<br>' + input[currLine++];
+        currLine++;
+    }
+
+    const toggles = [0, 0, 0, 0];
 
     const state = {
         board,
         triangle,
         goal,
-        blocks
+        toggles,
+        variables: {},
+        blocks,
+        titleText,
+        flavorText,
+        tipsText
     };
     console.log(state);
     

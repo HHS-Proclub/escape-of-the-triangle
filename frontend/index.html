@@ -17,11 +17,11 @@
             <div id="initialScreen" class="h-100">
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
                     <h1 class="m-3">Escape of the Triangle</h1>
-                    <button type="submit" class="btn btn-success" id="newRoomButton">Create New Game</button>
+                    <button type="submit" class="btn btn-success btn-green" id="newRoomButton">Create New Game</button>
                     <div class="m-2">OR</div>
                     <form class="d-flex flex-column align-items-center justify-content-center" onsubmit="event.preventDefault();">
-                        <input type="text" placeholder="Enter Game Code" id="roomCodeInput">
-                        <button type="submit" class="btn btn-success m-1" id="joinRoomButton">Join Game</button>
+                        <input type="text" placeholder="Enter Game Code" id="roomCodeInput" class="green-field">
+                        <button type="submit" class="btn btn-success btn-green m-2" id="joinRoomButton">Join Game</button>
                     </form>
                 </div>
             </div>
@@ -31,8 +31,8 @@
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
                     <h1>Enter your username:</h1>
                     <form class="d-flex flex-column align-items-center justify-content-center m-2" onsubmit="event.preventDefault();">
-                        <input type="text" placeholder="Username" id="usernameInput">
-                        <button type="submit" class="btn btn-success m-2" id="infoConfirmButton">Confirm</button>
+                        <input type="text" placeholder="Username" id="usernameInput" class="green-field">
+                        <button type="submit" class="btn btn-success btn-green m-2" id="infoConfirmButton">Confirm</button>
                     </form>
                 </div>
             </div>
@@ -40,15 +40,13 @@
             <!-- Waiting for players -->
             <div id="waitScreen" class="h-100">
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <h2 id="lobbyGameCode"></h2>
-                    <h3 id="lobbyPlayerCount"></h3>
-                    <div id="lobbyPlayerList">
-                        List of players goes here.
-                    </div>
-                    <p>This game is playable with 1-4 players, although groups of 3 or 4 are recommended.</p>
+                    <h2 id="lobbyGameCode">Game Code: 000000</h2>
+                    <h3 id="lobbyPlayerCount">Players: 0/4</h3>
+                    <div id="lobbyPlayerList"></div>
+                    <!--<p>This game is playable with 1-4 players, although groups of 3 or 4 are recommended.</p>-->
                     <form class="d-flex flex-column align-items-center justify-content-center m-2" onsubmit="event.preventDefault();">
-                        <input type="text" placeholder="Starting Level" id="startingLevelInput">
-                        <button type="submit" class="btn btn-success m-2" id="lobbyStartButton">Start Game</button>
+                        <input type="text" placeholder="Starting Level" id="startingLevelInput" class="green-field">
+                        <button type="submit" class="btn btn-success btn-green m-2" id="lobbyStartButton">Start Game</button>
                     </form>
                 </div>
             </div>
@@ -72,21 +70,34 @@
                         </template>
                     </div>
                     <div id="rightGameScreen" class="d-flex flex-column">
-                        <h3>Level 0</h3>
-                        <p>"Where am I?" the triangle wondered. In a feat of dashing glory, the triangle transports to a new dimension... Help them get out of this mess!</p>
-                        <h4>Tips</h4>
-                        <p>A bunch of tips should go here. Right now, it's just a bunch of useless text that probably doesn't need to exist.</p>
-                        <h4>Queue</h4>
-                        <p>Move forward 1 step</p>
-                        <p>Turn left</p>
-                        <p>Turn left</p>
-                        <p>Move forward 1 step</p>
-                        <h5 style="position: absolute; bottom: 0;">Room Code: 000000</h5>
+                        <h3 id="levelNumberText">Level 0</h3>
+                        <p id="levelTitleText"></p>
+                        <p id="flavorText">"Where am I?" the triangle wondered. In a feat of dashing glory, the triangle transports to a new dimension... Help them get out of this mess!</p>
+                        <h4 id="tipsTitle">Tips</h4>
+                        <p id="tipsText">A bunch of tips should go here. Right now, it's just a bunch of useless text that serves no purpose whatsoever.</p>
+                        <h4>Blocks</h4>
+                        <div id="blockDiv">
+                            <div class="blockPlayerDiv"></div>
+                            <div class="blockPlayerDiv"></div>
+                            <div class="blockPlayerDiv"></div>
+                            <div class="blockPlayerDiv"></div>
+                            <div class="blockPlayerDiv"></div>
+                        </div>
+                        <h4>Variables</h4>
+                        <div id="variableDiv">
+                            
+                        </div>
+                        <div id="rightBottomTab">
+                            <div id="gamePlayerCount">Players: 0/4</div>
+                            <div id="gameCodeText">Game Code: 000000</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="fullScreenDiv"></div>
 
     <!-- socket.io JS files -->
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>

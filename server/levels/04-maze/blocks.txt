@@ -1,4 +1,9 @@
-5
+6
+-1 -1
+Move forward 1 step
+
+moveForward(1);
+
 -1 -1
 Move forward 1 step
 

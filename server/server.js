@@ -30,7 +30,7 @@ module.exports = {
 const { initInitialScreen } = require("./js/initialScreen");
 const { initNameScreen } = require("./js/nameScreen");
 const { initWaitScreen } = require("./js/waitScreen");
-const { initGameScreen } = require("./js/gameScreen");
+const { initGameScreen, broadcastGameState, broadcastLevelFailed } = require("./js/gameScreen");
 
 // --- SOCKET HANDLING ---
 
@@ -53,8 +53,10 @@ function handleDisconnect(client) {
     if (!(client.id in clientToRoom)) return;
 
     const state = roomStates[clientToRoom[client.id]];
-    state.clients.splice(client.playerNum, 1);
-    state.players.splice(client.playerNum, 1);
+    const playerIndex = state.clients.findIndex(e => e.id === client.id);
+    const tempPlayerNum = state.players[playerIndex].tempPlayerNum;
+    state.clients.splice(playerIndex, 1);
+    state.players.splice(playerIndex, 1);
     if (state.players.length === 0) {
         console.info(`Cleaning up room ${clientToRoom[client.id]}`);
 
@@ -64,8 +66,15 @@ function handleDisconnect(client) {
         }
         delete roomStates[clientToRoom[client.id]];
     } else {
-        const emitState = getEmitState(state);
-        client.to(clientToRoom[client.id]).emit("updateLobby", emitState);
+        if ("level" in state) {
+            // Reset the level
+            state.status = "fail";
+            broadcastGameState(state);
+            broadcastLevelFailed(state);
+        } else {
+            const emitState = getEmitState(state);
+            client.to(clientToRoom[client.id]).emit("updateLobby", emitState);
+        }
     }
 
     delete clientToRoom[client.id];
@@ -80,7 +89,12 @@ function getEmitState(state) {
         players: state.players,
         level: state.level,
         status: state.status,
+        titleText: state.titleText,
+        flavorText: state.flavorText,
+        tipsText: state.tipsText,
         board: state.board,
+        toggles: state.toggles,
+        variables: state.variables,
         triangle: state.triangle,
         goal: state.goal,
         blocks: state.blocks
