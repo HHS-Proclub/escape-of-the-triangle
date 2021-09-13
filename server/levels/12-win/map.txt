@@ -2,11 +2,11 @@
 XDDD.DDDX
 X..DDD..X
 X.......X
-X.......X
-X.......X
-X.......X
-X.......X
-X.......X
+X.X1.X1.X
+X.XX.XX.X
+X...D...X
+X.X...X.X
+X..XXX..X
 X.......X
 8 4 3
 0 4

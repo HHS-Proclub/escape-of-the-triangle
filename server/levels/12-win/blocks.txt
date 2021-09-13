@@ -1,4 +1,4 @@
-3
+4
 -1 -1
 Move forward 1 step
 
@@ -13,3 +13,8 @@ turnLeft();
 Turn right
 
 turnRight();
+
+-1 -1
+toggleWall("green", 1);
+
+toggleWall(0, 1);

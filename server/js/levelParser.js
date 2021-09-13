@@ -42,8 +42,8 @@ function shuffleArray(array) {
 
 function parseLevel(level, playerCount) {
     let levelNames = readFromFile(path.join(__dirname, "..", "levels", "levels.txt"));
-    console.info(`${levelNames.length} levels loaded`);
-    console.info(levelNames);
+    // console.info(`${levelNames.length} levels loaded`);
+    // console.info(levelNames);
     if (level >= levelNames.length) {
         console.warn(`Level ${level} does not exist, there are only ${levelNames.length} levels!`);
         level = levelNames.length-1;
@@ -144,7 +144,7 @@ function parseLevel(level, playerCount) {
         flavorText,
         tipsText
     };
-    console.log(state);
+    // console.log(state);
     
     console.info(`Loaded level ${levelNames[level]}`);
     return state;

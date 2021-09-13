@@ -43,6 +43,9 @@ io.on("connection", client => {
     initWaitScreen(client);
     initGameScreen(client);
 
+    // Handle client ping
+    client.on("ping", (time) => client.emit("pong", time));
+    
     // Handle client disconnect
     client.on("disconnect", () => handleDisconnect(client));
 });

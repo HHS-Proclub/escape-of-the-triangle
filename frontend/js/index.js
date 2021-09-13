@@ -9,7 +9,19 @@ import { initGameScreen } from "./gameScreen.js";
 
 export { socket, screens, switchScreen };
 
-const socket = io("http://localhost:3000");
+// CHANGE THIS
+// const socket = io("http://localhost:3000");
+const socket = io("https://escapeofthetriangle.herokuapp.com/");
+
+// Measure ping
+setInterval(function() {
+    let time = Date.now();
+    socket.emit('ping', time);
+}, 10000);
+socket.on('pong', function(time) {
+    let latency = (Date.now() - time) / 2;
+    console.log(`Ping: ${latency}ms`);
+});
 
 const screens = {
     initialScreen: document.getElementById("initialScreen"),
