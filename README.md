@@ -2,6 +2,18 @@
 
 Contains all code for the "Escape of the Triangle" workshop.
 
+## TODO
+
+Make the server more crash-proof
+
+Add titles and flavor text for each level
+
+Add tips for each level
+
+Check for correct responsive sizing
+
+Test the workshop out to see if it meets time constraints
+
 ## Workshop Info
 
 See this [Google Doc](https://docs.google.com/document/d/13p5BoC7BIf2VXVYe0BNuxkO0PCirLQuqS0x1D6GOsP4/edit?usp=sharing) for more info.

@@ -26,6 +26,13 @@ window.onload = () => {
     console.info("All screens initialized!");
 };
 
+// https://stackoverflow.com/questions/5241981/disable-mouse-double-click-using-javascript-or-jquery
+document.addEventListener( 'dblclick', function(event) {  
+    event.preventDefault();  
+    event.stopPropagation(); 
+  },  true
+);
+
 function switchScreen(newScreen) {
     for (let screen in screens) {
         if (screens[screen] !== newScreen) screens[screen].style.display = "none";

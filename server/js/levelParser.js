@@ -92,7 +92,7 @@ function parseLevel(level, playerCount) {
         currLine++;
 
         // Distribute blocks to players
-        if (player !== -1) {
+        if (player >= 0) {
             if (playerCount === 3 && player === 3) player = Math.floor(Math.random() * 3);
             else if (playerCount === 2) {
                 if (player === 3) player = 0;
@@ -101,8 +101,8 @@ function parseLevel(level, playerCount) {
         }
 
         // Add the block
-        blocks.addBlock(uuidv4(), (player === -1 ? -1 : randPlayerMap[player]), text, action, uses, true);
-        if (player !== -1) playerNumBlocks[randPlayerMap[player]]++;
+        blocks.addBlock(uuidv4(), (player < 0 ? player : randPlayerMap[player]), text, action, uses, true);
+        if (player >= 0) playerNumBlocks[randPlayerMap[player]]++;
     }
 
     // Add a reset block to the person with the least blocks

@@ -109,3 +109,7 @@ function getEmitState(state) {
 http.listen(3000, function() {
     console.info("Listening on *:3000");
 });
+
+process.on('uncaughtException', (err, origin) => {
+    console.error(`[UNCAUGHT EXCEPTION] ${err}\n` + `Exception origin: ${origin}`);
+});

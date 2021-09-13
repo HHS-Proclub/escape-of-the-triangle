@@ -9,5 +9,5 @@
 08-togglemaze
 09-checkers
 10-variables
-
-10 levels might be enough for the workshop...?
+11-bonus
+12-win

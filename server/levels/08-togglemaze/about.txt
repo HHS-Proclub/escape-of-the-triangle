@@ -1,4 +1,4 @@
-Onward!
+Toggle Maze
 ===
 Flavor text (if any) goes here.
 ===

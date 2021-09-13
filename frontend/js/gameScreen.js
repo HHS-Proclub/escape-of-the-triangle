@@ -13,7 +13,7 @@ import { Blocks } from "../modules/Blocks.js";
 export { initGameScreen, initLevel, blocks, setPlayer };
 
 // Constants
-const CANVAS_SIZE = 600;
+const CANVAS_SIZE = 550;
 const FRAME_RATE = 60;
 
 // Variables
@@ -22,6 +22,22 @@ let board, triangle, goal, blocks;
 let lastTime, player, frame;
 let toggles = [0, 0, 0, 0], toggleTimes = [0, 0, 0, 0];
 
+function calcWidthLimit() {
+    let widthLimit;
+    if (window.screen.width <= 1025) widthLimit = window.screen.width - 10;
+    else widthLimit = window.screen.width * 2 / 3 - 10;
+    return widthLimit;
+}
+
+function calcHeightLimit() {
+    let heightLimit = window.screen.height - 70;
+    return heightLimit;
+}
+
+function calcCanvasSize() {
+    return Math.min(CANVAS_SIZE, Math.min(calcWidthLimit(), calcHeightLimit()));
+}
+
 /**
  * Initalizes the gameScreen. Called once the page loads.
  */
@@ -29,11 +45,6 @@ function initGameScreen() {
     // Get the canvas and 2D context
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = canvas.height = CANVAS_SIZE;
-    // Set the right div sizes
-    document.getElementById("blockList").style.width = `${CANVAS_SIZE}px`;
-    document.getElementById("rightGameScreen").style.width = `${Math.floor(CANVAS_SIZE/2)}px`;
-    document.getElementById("rightGameScreen").style.height = `${CANVAS_SIZE}px`;
 
     const fullDiv = document.getElementById("fullScreenDiv");
     setTimeout(() => {
@@ -160,6 +171,7 @@ function handleNewGameState(state) {
         blockDivs[i+1].innerHTML += `<div><b>${safeName}</b></div>`;
     }
     for (let block of blocks.blocks) {
+        if (block.player < -1) continue;
         const blockText = `
         <div class="infoBlock d-flex align-items-center justify-content-between">
             <div class="infoBlockText">${block.text}</div>
@@ -167,6 +179,20 @@ function handleNewGameState(state) {
         </div>
         `;
         blockDivs[block.player+1].innerHTML += blockText;
+    }
+
+    // Variables
+    document.getElementById("variableDiv").innerHTML = "";
+    if (Object.keys(state.variables).length === 0) {
+        document.getElementById("variableTitle").style.display = "none";
+        document.getElementById("variableDiv").style.display = "none";
+    } else {
+        document.getElementById("variableTitle").style.display = "block";
+        document.getElementById("variableDiv").style.display = "block";
+        for (let variable in state.variables) {
+            const varText = `<div>${variable} = ${state.variables[variable]}</div>`;
+            document.getElementById("variableDiv").innerHTML += varText;
+        }
     }
 
     // Bottom info
@@ -207,6 +233,24 @@ function handleLevelFailed(state) {
 function update(dt) {
     toggleTimes = toggleTimes.map(e => e-dt);
 
+    // Dynamically resize stuff
+    const canvasSize = calcCanvasSize();
+    
+    canvas.width = canvas.height = canvasSize;
+
+    if (blocks.blocks.length >= 5) {
+        document.getElementById("blockList").classList.add("smallBlocks");
+    } else {
+        document.getElementById("blockList").classList.remove("smallBlocks");
+    }
+
+    // Set the right div sizes
+    document.getElementById("blockList").style.width = `${canvasSize}px`;
+    document.getElementById("rightGameScreen").style.width = `300px`;
+
+    const rightHeight = canvasSize + getAbsoluteHeight(document.getElementById("blockList"));
+    document.getElementById("rightGameScreen").style.height = `${rightHeight}px`;
+
     // Render objects
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -214,10 +258,6 @@ function update(dt) {
     goal.render(frame);
     triangle.render(frame);
     blocks.renderBlocks(socket);
-
-    // Dynamically resize info bar
-    const rightHeight = CANVAS_SIZE + getAbsoluteHeight(document.getElementById("blockList"));
-    document.getElementById("rightGameScreen").style.height = `${rightHeight}px`;
 }
 
 function setPlayer(p) {

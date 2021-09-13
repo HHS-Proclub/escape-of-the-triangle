@@ -74,11 +74,16 @@ initialScreen is the only visible screen at the start
     padding: 12px;
     border: 2px solid #00e000;
     font-family: monospace;
+    overflow: hidden;
 }
 
 #rightBottomTab {
     position: absolute;
     bottom: 10px;
+}
+
+#variableTitle {
+    margin-top: 10px;
 }
 
 /*
@@ -125,4 +130,33 @@ Info block styling
 .infoBlockUses {
     margin-left: 20px;
     margin-right: 2px;
+}
+
+/*
+Responsive
+*/
+
+.smallBlocks .scriptBlock {
+    font-size: 13px;
+    padding: 4px;
+    margin: 4px !important;
+}
+
+.smallBlocks .scriptBlockCode {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    margin-right: 11px;
+    text-align: left;
+    padding: 4px !important;
+}
+
+.smallBlocks .scriptBlockUses {
+    border-radius: 4px;
+    padding: 4px !important;
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width:1025px) {
+    #rightGameScreen {
+        display: none !important;
+    }
 }

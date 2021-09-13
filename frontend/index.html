@@ -16,7 +16,7 @@
             <!-- Shown when the webpage first loads -->
             <div id="initialScreen" class="h-100">
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <h1 class="m-3">Escape of the Triangle</h1>
+                    <h1 class="m-3 text-center">Escape of the Triangle</h1>
                     <button type="submit" class="btn btn-success btn-green" id="newRoomButton">Create New Game</button>
                     <div class="m-2">OR</div>
                     <form class="d-flex flex-column align-items-center justify-content-center" onsubmit="event.preventDefault();">
@@ -54,7 +54,7 @@
             <!-- Main game screen -->
             <div id="gameScreen" class="h-100">
                 <!-- Flex used to center the canvas -->
-                <div class="d-flex flex-row align-items-center justify-content-center h-100">
+                <div class="d-flex flex-row align-items-center justify-content-center w-100 h-100">
                     <div id="leftGameScreen" class="d-flex flex-column align-items-center justify-content-center h-100">
                         <!-- Main game canvas -->
                         <canvas id="canvas" class=""></canvas>
@@ -83,7 +83,7 @@
                             <div class="blockPlayerDiv"></div>
                             <div class="blockPlayerDiv"></div>
                         </div>
-                        <h4>Variables</h4>
+                        <h4 id="variableTitle">Variables</h4>
                         <div id="variableDiv">
                             
                         </div>

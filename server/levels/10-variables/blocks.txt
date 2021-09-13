@@ -1,8 +1,8 @@
 7
 0 -1
-moveForward(numberOfSteps);
+moveForward(numSteps);
 
-moveForward("numberOfSteps");
+moveForward("numSteps");
 
 0 -1
 turnLeft();
@@ -20,16 +20,16 @@ toggleWall("green", 1);
 toggleWall(0, 1);
 
 1 -1
-numberOfSteps = 3;
+numSteps = 3;
 
-setVariable("numberOfSteps", 3);
+setVariable("numSteps", 3);
 
 2 -1
-numberOfSteps = 4;
+numSteps = 4;
 
-setVariable("numberOfSteps", 4);
+setVariable("numSteps", 4);
 
 3 -1
-numberOfSteps = 5;
+numSteps = 5;
 
-setVariable("numberOfSteps", 5);
+setVariable("numSteps", 5);

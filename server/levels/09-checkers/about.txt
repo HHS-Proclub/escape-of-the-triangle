@@ -1,4 +1,4 @@
-Onward!
+Checkers
 ===
 Flavor text (if any) goes here.
 ===
