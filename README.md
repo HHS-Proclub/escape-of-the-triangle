@@ -1,6 +1,6 @@
 # Escape of the Triangle
 
-Contains all code for the "Escape of the Triangle" workshop, created by Kyle Fu. The code is split into two sections: Frontend and backend.
+Contains all code for the "Escape of the Triangle" workshop, created by Kyle. The code is split into two sections: Frontend and backend.
 
 ## Workshop Info
 
