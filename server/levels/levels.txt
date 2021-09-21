@@ -8,6 +8,5 @@
 07-toggles
 08-togglemaze
 09-checkers
-10-variables
-11-bonus
-12-win
+10-bonus
+11-win

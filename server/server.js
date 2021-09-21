@@ -8,7 +8,6 @@ const roomStates = {};
 const clientToRoom = {};
 
 // Allow all origins (CORS)
-require("./app");
 const app = require("express")();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
@@ -19,11 +18,14 @@ const io = require("socket.io")(http, {
 });
 
 module.exports = {
+    app,
     roomStates,
     clientToRoom,
     getEmitState,
     io
 };
+
+require("./app");
 
 // --- IMPORTS ---
 
@@ -82,8 +84,8 @@ function handleDisconnect(client) {
 
     delete clientToRoom[client.id];
 
-    console.log(roomStates);
-    console.log(clientToRoom);
+    // console.log(roomStates);
+    // console.log(clientToRoom);
 }
 
 function getEmitState(state) {
@@ -109,8 +111,10 @@ function getEmitState(state) {
 }
 
 // Listen for connections
-http.listen(3000, function() {
-    console.info("Listening on *:3000");
+let port = process.env.PORT;
+if (port == null || port == "") port = 3000;
+http.listen(port, function() {
+    console.info(`Listening on *:${port}`);
 });
 
 process.on('uncaughtException', (err, origin) => {

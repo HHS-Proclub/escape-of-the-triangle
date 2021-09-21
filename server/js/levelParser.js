@@ -38,7 +38,7 @@ function shuffleArray(array) {
     }
   
     return array;
-  }
+}
 
 function parseLevel(level, playerCount) {
     let levelNames = readFromFile(path.join(__dirname, "..", "levels", "levels.txt"));

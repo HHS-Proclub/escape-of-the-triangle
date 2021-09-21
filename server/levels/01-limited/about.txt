@@ -1,6 +1,6 @@
 Limited
 ===
-Flavor text (if any) goes here.
+This should be <i>straightforward</i>. Ha. Ha.
 ===
-Tips go here.
+Be mindful of your limited movement blocks!
 ===

@@ -10,8 +10,8 @@ import { initGameScreen } from "./gameScreen.js";
 export { socket, screens, switchScreen };
 
 // CHANGE THIS
-// const socket = io("http://localhost:3000");
-const socket = io("https://escapeofthetriangle.herokuapp.com/");
+const socket = io("http://localhost:3000");
+// const socket = io("https://escapeofthetriangle.herokuapp.com/");
 
 // Measure ping
 setInterval(function() {

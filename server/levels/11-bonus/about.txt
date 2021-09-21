@@ -1,6 +1,0 @@
-Bonus Level
-===
-
-===
-This level will probably be put in the workshop as an "easter egg". The solution is to look inside the source code and run the block manually.
-===

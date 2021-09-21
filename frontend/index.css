@@ -117,7 +117,7 @@ Info block styling
 */
 
 .blockPlayerDiv {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .infoBlock {
@@ -131,6 +131,14 @@ Info block styling
 .infoBlockUses {
     margin-left: 20px;
     margin-right: 2px;
+}
+
+#flavorText {
+    font-size: 14px;
+}
+
+#tipsText {
+    font-size: 14px;
 }
 
 /*

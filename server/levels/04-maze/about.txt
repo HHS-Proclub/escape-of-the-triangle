@@ -1,6 +1,6 @@
 Maze
 ===
-Flavor text (if any) goes here.
+There are many possibilities here, so be careful which path you take. You may not be able to turn enough times!
 ===
-Tips go here.
+Try to calculate the turns needed before starting.
 ===

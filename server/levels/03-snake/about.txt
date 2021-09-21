@@ -1,6 +1,6 @@
 Snake
 ===
-Flavor text (if any) goes here.
+Red = lava.
 ===
-Tips go here.
+Lava = death.
 ===

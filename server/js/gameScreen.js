@@ -44,6 +44,7 @@ function handleLobbyStart(level, client) {
     // startGameLoop(state);
 }
 
+/*
 function startGameLoop(state) {
     state.intervalId = setInterval(() => {
         const currTime = new Date().getTime();
@@ -64,6 +65,7 @@ function startGameLoop(state) {
         }
     }, 1000 / FRAME_RATE);
 }
+*/
 
 function broadcastGameState(state) {
     io.to(state.code).emit("newGameState", getEmitState(state));

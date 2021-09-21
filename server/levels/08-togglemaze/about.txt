@@ -1,6 +1,6 @@
 Toggle Maze
 ===
-Flavor text (if any) goes here.
+More toggle switches! Coordination with your team is a necessity to complete this level.
 ===
-Tips go here.
+Even if your block is on cooldown, your teammates’ blocks may not!
 ===

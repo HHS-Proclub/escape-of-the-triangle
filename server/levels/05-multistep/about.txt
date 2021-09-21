@@ -1,6 +1,6 @@
 Multistep
 ===
-Flavor text (if any) goes here.
+You have some new movement blocks! Careful though, you will be hard stopped by walls and killed by lava if you run into them...
 ===
-Tips go here.
+You don’t have to worry about running off the map.
 ===

@@ -36,7 +36,7 @@ function useBlock(state, id) {
     else if (block.uses > 0) block.uses--;
 
     // Use this block
-    console.info(`Client used "${block.text}"`);
+    // console.info(`Client used "${block.text}"`);
     activeState = state;
     eval(block.action);
     return block;
