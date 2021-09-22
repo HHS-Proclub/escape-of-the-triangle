@@ -1,6 +1,6 @@
 # Escape of the Triangle
 
-Contains all code for the "Escape of the Triangle" workshop, created by Kyle. The code is split into two sections: Frontend and backend.
+Contains all code for the "Escape of the Triangle" workshop. The code is split into two sections: Frontend and backend.
 
 ## Workshop Info
 
@@ -25,3 +25,5 @@ Officers: See this [Google Doc](https://docs.google.com/document/d/13p5BoC7BIf2V
 1. Deploy all files in the `server` folder onto a [Heroku app](https://devcenter.heroku.com/articles/deploying-nodejs).
 2. Edit the `frontend/js/index.js` file. Below the comment that says `CHANGE THIS`, change the URL to point to the Heroku app deployed in step 1.
 3. Copy all files in the `frontend` folder to a folder on a web server.
+
+Workshop made by Giantpizzahead (Kyle)
