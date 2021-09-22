@@ -26,4 +26,4 @@ Officers: See this [Google Doc](https://docs.google.com/document/d/13p5BoC7BIf2V
 2. Edit the `frontend/js/index.js` file. Below the comment that says `CHANGE THIS`, change the URL to point to the Heroku app deployed in step 1.
 3. Copy all files in the `frontend` folder to a folder on a web server.
 
-Workshop made by Giantpizzahead (Kyle)
+Workshop made by Giantpizzahead (Kyle), with help from other Programming Club officers
