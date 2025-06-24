@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for escape-of-the-triangle-shy-wave-2602 on 2025-06-23T21:14:41-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "escape-of-the-triangle"
+primary_region = "sjc"
+
+[build]
+  builder = "heroku/builder:22"
+
+[env]
+  PORT = "3000"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines = 1
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
