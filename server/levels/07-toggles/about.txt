@@ -1,6 +1,0 @@
-Toggles
-===
-Introducing a new feature, and a new method! The green blocks are walls which can be turned off... temporarily.
-===
-Move quickly, or you will be squashed by the wall as it regenerates!
-===

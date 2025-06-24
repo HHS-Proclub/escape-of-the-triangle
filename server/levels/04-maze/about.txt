@@ -1,6 +1,0 @@
-Maze
-===
-There are many possibilities here, so be careful which path you take. You may not be able to turn enough times!
-===
-Try to calculate the turns needed before starting.
-===

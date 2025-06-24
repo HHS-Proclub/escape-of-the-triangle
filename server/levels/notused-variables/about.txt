@@ -1,6 +1,0 @@
-Variables
-===
-
-===
-This level probably won't be used in the workshop, since level 9 (the 10th level) is meant to be a "boss" level.
-===

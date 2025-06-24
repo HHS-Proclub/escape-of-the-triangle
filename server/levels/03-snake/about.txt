@@ -1,6 +1,0 @@
-Snake
-===
-Red = lava.
-===
-Lava = death.
-===

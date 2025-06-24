@@ -1,6 +1,0 @@
-Toggle Maze
-===
-More toggle switches! Coordination with your team is a necessity to complete this level.
-===
-Even if your block is on cooldown, your teammates’ blocks may not!
-===

@@ -1,6 +1,0 @@
-Method Spiral
-===
-So far, the blocks have been showing what they would do in English. Now, we share what methods are being called for each block.
-===
-The method name describes what the method does, and the argument (if it exists) changes its behavior.
-===
