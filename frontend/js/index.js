@@ -10,7 +10,9 @@ import { initGameScreen } from "./gameScreen.js";
 export { socket, screens, switchScreen };
 
 // CHANGE THIS
-const socket = io("https://escape-of-the-triangle.fly.dev");
+const socket = io("https://escape-of-the-triangle.fly.dev", {
+  transports: ["websocket"],
+});
 // const socket = io("http://localhost:3000");
 // const socket = io("https://escapeofthetriangle.herokuapp.com/");
 
